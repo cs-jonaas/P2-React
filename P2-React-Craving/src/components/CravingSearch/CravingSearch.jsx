@@ -5,6 +5,7 @@ import { Search } from 'lucide-react';
 const CravingSearch = ({ onSearch }) => {
   const [input, setInput] = useState('');
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (input.trim()) {
@@ -13,6 +14,7 @@ const CravingSearch = ({ onSearch }) => {
   };
 
   return (
+
     <form onSubmit={handleSubmit} className='w-full max-w-2xl'>
       <div className='relative'>
         <input
@@ -34,4 +36,3 @@ const CravingSearch = ({ onSearch }) => {
 };
 
 export default CravingSearch;
-
