@@ -7,8 +7,8 @@ const CravingSearch = ({ onSearch }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (input.trim()) {
-      onSearch(input.trim());
+    if (input.trim()) {           //if input is not empty
+      onSearch(input.trim());     //calls onSearch with trimmed input string
     }
   };
 

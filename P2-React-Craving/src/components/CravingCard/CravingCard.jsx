@@ -1,12 +1,18 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Heart, MapPin, Loader2 } from 'lucide-react';
 
-const CravingCard = ({ place, isFavourite, isLoading, onFavourite }) => {
+
+const CravingCard = ({ place, isFavourite, isLoading, onFavourite, comment, onCommentChange, onCommentSubmit, }) => {
+  // const [input, setInput] = useState('');
+  
   const formatAddress = (address) => {
-    if (!address) return 'Address not available';
+    if (typeof address === 'string') {
+      return address || 'Address not available';
+    }
     
     // This block allows you to display the address only if the field is available
+
     const parts = [];
     if (address.block) parts.push(address.block);
     if (address.streetName) parts.push(address.streetName);
@@ -23,6 +29,7 @@ const CravingCard = ({ place, isFavourite, isLoading, onFavourite }) => {
     
     return fullAddress || 'Address not available';
   };
+  
 
   return (
     // group class triggers state on its children
@@ -51,22 +58,39 @@ const CravingCard = ({ place, isFavourite, isLoading, onFavourite }) => {
             )}
           </button>
         </div>
-
         {place.description && (
           <p className='text-gray-600 mb-6 line-clamp-3 font-light leading-relaxed'>
             {place.description}
           </p>
         )}
-        <p>{place.ratings}</p>
         <div className='flex items-start gap-3 text-gray-400'>
           <MapPin className='w-4 h-4 mt-1 flex-shrink-0' />   {/* Map pin icon */}
           <p className='text-sm line-clamp-2 font-light'>
             {formatAddress(place.address)}
           </p>
         </div>
+        
       </div>
     </div>
   );
 };
 
 export default CravingCard;
+ 
+// {isFavourite && (
+//           <div className='relative'>
+//             <input
+//               type='text'
+//               placeholder='Add a comment...'
+//               value={comment || ''}
+//               onChange={onCommentChange}
+//               className='w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none'
+//             />
+//             <button
+//               onClick={onCommentSubmit}
+//               className='absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-900'
+//             >
+//               <Send className='w-5 h-5' />
+//             </button>
+//           </div>
+//         )}
