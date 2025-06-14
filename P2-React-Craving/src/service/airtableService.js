@@ -1,37 +1,24 @@
-const AIRTABLE_BASE_URL = 'https://api.airtable.com/v0/cravings/table_1';
+
+const AIRTABLE_BASE_URL = 'https://api.airtable.com/v0/appV914NsTpfQv7rD/foodie';
 const VITE_AIRTABLE_TOKEN = import.meta.env.VITE_AIRTABLE_TOKEN
 
-// const testAirtable = async (holidayName, likes) => {
-//   try {
-//     const res = await fetch(BASE_URL, {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//             'Authorization': `Bearer ${import.meta.env.VITE_AIRTABLE_TOKEN}`
-//         },
-//         body: JSON.stringify({
-//             fields: {
-//                 name: holidayName,
-//                 likes: likes,
-//             }
-//         }),
-
-//     });
-
-//     const obj = await res.json();
-
-//     return obj;
-//   } catch(err) {
-//     console.error(err);
-//   }
-// };
-
-// export {
-//     testAirtable
-// }
-
 // Airtable Create
-export const createRecord = async (record) => {
+export const createRecord = async (place) => {
+
+  const fields = {
+    name: place.name,
+    description: place.description
+  };
+
+if (place.uuid) fields.place_uuid = place.uuid;
+if (place.block) fields.block = place.block;
+if (place.streetName) fields.streetName = place.streetName;
+if (place.floorNumber) fields.floorNumber = place.floorNumber;
+if (place.unitNumber) fields.unitNumber = place.unitNumber;
+if (place.buildingName) fields.buildingName = place.buildingName;
+if (place.postalCode) fields.postalCode = place.postalCode;
+
+
   try {
     const response = await fetch(AIRTABLE_BASE_URL, {
       method: 'POST',
@@ -39,8 +26,10 @@ export const createRecord = async (record) => {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${VITE_AIRTABLE_TOKEN}`
       },
-      body: JSON.stringify({ fields: record }),
+
+      body: JSON.stringify({ fields }),
     });
+    
 
     if (!response.ok) throw new Error('Airtable create failed');
     
@@ -53,31 +42,10 @@ export const createRecord = async (record) => {
   }
 };
 
-// Airtable Update
-export const updateRecord = async (id, record) => {
-  try {
-    const response = await fetch(`${AIRTABLE_BASE_URL}/${id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${VITE_AIRTABLE_TOKEN}`
-      },
-      body: JSON.stringify({ fields: record }),
-    });
-    
-    if (!response.ok) throw new Error('Airtable update failed');
-    
-    const data = await response.json();
-    
-    return data;
-  } catch (error) {
-    console.error('Error updating record:', error);
-    throw error;
-  }
-};
 
 // Airtable Delete
 export const deleteRecord = async (id) => {
+    
   try {
     const response = await fetch(`${AIRTABLE_BASE_URL}/${id}`, {
       method: 'DELETE',
@@ -98,4 +66,58 @@ export const deleteRecord = async (id) => {
   }
 };
 
-export { createRecord, updateRecord, deleteRecord }
+
+export const getAllRecords = async () => {
+  const res = await fetch(AIRTABLE_BASE_URL, {
+    headers: {
+      Authorization: `Bearer ${VITE_AIRTABLE_TOKEN}`
+    }
+  });
+
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error?.error?.message || 'Failed to fetch records');
+  }
+
+  const data = await res.json();
+  return data.records;
+};
+
+// export const createRecord = async (place) => {
+//   console.log('Creating record with place:', place);
+
+//   const fields = {
+//     name: place.name,
+//     description: place.description
+//   };
+
+// if (place.uuid) fields.place_uuid = place.uuid;
+// if (place.block) fields.block = place.block;
+// if (place.streetName) fields.streetName = place.streetName;
+// if (place.floorNumber) fields.floorNumber = place.floorNumber;
+// if (place.unitNumber) fields.unitNumber = place.unitNumber;
+// if (place.buildingName) fields.buildingName = place.buildingName;
+// if (place.postalCode) fields.postalCode = place.postalCode;
+
+//   try {
+//     const response = await fetch(AIRTABLE_BASE_URL, {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//         'Authorization': `Bearer ${VITE_AIRTABLE_TOKEN}`
+//       },
+//       body: JSON.stringify({ fields }),
+//     });
+    
+
+//     if (!response.ok) throw new Error('Airtable create failed');
+    
+//     const data = await response.json();
+    
+//     return data;
+//   } catch (error) {
+//     console.error('Error creating record:', error);
+//     throw error;
+//   }
+// };
+

@@ -25,4 +25,3 @@ export const fetchFoodPlaces = async (searchTerm) => {
     throw error;
   }
 };
-
