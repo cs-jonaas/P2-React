@@ -1,3 +1,4 @@
+
 const AIRTABLE_BASE_URL = 'https://api.airtable.com/v0/appV914NsTpfQv7rD/foodie';
 const VITE_AIRTABLE_TOKEN = import.meta.env.VITE_AIRTABLE_TOKEN
 
@@ -11,6 +12,7 @@ export const createRecord = async (place) => {
   };
 
 
+
   try {
     const response = await fetch(AIRTABLE_BASE_URL, {
       method: 'POST',
@@ -18,6 +20,7 @@ export const createRecord = async (place) => {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${VITE_AIRTABLE_TOKEN}`
       },
+
       body: JSON.stringify({ fields }),
     });
     
@@ -79,6 +82,7 @@ export const deleteRecord = async (id) => {
     throw error;
   }
 };
+
 
 export const getAllRecords = async () => {
   const res = await fetch(AIRTABLE_BASE_URL, {

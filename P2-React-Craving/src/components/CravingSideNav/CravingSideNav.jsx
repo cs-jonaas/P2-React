@@ -1,5 +1,6 @@
 
 import React from 'react';
+
 import { Link } from 'react-router';
 import { Home, Heart, Settings, Menu, X } from 'lucide-react';
 
@@ -57,5 +58,6 @@ const CravingSideNav = ({ isOpen, onToggle }) => {
     </nav>
   );
 };
+
 
 export default CravingSideNav;

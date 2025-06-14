@@ -2,6 +2,7 @@
 import React from 'react';
 import CravingCard from '../CravingCard/CravingCard';
 
+
 const CravingMain = ({ foodPlaces, favourites, favouriteLoading, onFavourite }) => {
   
   if (!foodPlaces.length) {
@@ -24,6 +25,7 @@ const CravingMain = ({ foodPlaces, favourites, favouriteLoading, onFavourite }) 
           isLoading={favouriteLoading.has(place.uuid)}    //check if card is loading
           onFavourite={() => onFavourite(place)}          //when user click on heart icon to add to favourites
         />
+
       ))}
     </div>
   );

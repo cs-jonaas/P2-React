@@ -1,4 +1,5 @@
 
+
 import React, { useState } from 'react';
 import { Routes, Route } from 'react-router';
 import CravingSearch from './components/CravingSearch/CravingSearch';
@@ -13,6 +14,7 @@ import './App.css';
 const App = () => {
   const [query, setQuery] = useState('');
   const [foodPlaces, setFoodPlaces] = useState([]);
+
   const [favourites, setFavourites] = useState(new Set());
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -23,6 +25,7 @@ const App = () => {
     setQuery(searchTerm);   //Updates the query state variable with the new searchTerm
     setLoading(true);       //Sets the loading state to true
     setError(null);         //Clears any previous error messages
+
     try {
       const results = await CravingService.fetchFoodPlaces(searchTerm);
       setFoodPlaces(results);
