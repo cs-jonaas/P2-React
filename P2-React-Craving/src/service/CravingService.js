@@ -4,15 +4,15 @@ const STB_API_KEY = import.meta.env.VITE_STB_API_KEY;
 
 export const fetchFoodPlaces = async (searchTerm) => {
   try {
-    const url = new URL(STB_API_BASE);
-    url.searchParams.append('searchType', 'keyword');
-    url.searchParams.append('searchValues', searchTerm);
-    url.searchParams.append('limit', 50);
+    const url = new URL(STB_API_BASE);                    
+    url.searchParams.append('searchType', 'keyword');     // appends searchtype=keword to url
+    url.searchParams.append('searchValues', searchTerm);  // appends searchvalue='searchterm' to url
+    url.searchParams.append('limit', 10);                 // appends limit=10 to url
+    
     const response = await fetch(url, {
     method: 'GET',
     headers: {
-        'Content-Type': 'application/json',
-        'X-API-Key': STB_API_KEY,
+        'X-API-Key': STB_API_KEY,                         //authenticates via API key
     },
     });
 

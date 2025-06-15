@@ -41,21 +41,22 @@ const App = () => {
     setFavouriteLoading(prev => new Set([...prev, placeId]));   //Adds new Favourite to array
     
     try {
-      if (favourites.has(placeId)) {      //check if place is already in favourite
-        setFavourites(prev => {           //if place exist it will not be added
+      if (favourites.has(placeId)) {
+        setFavourites(prev => {           
           const newFavourites = new Set(prev);
           newFavourites.delete(placeId);
           return newFavourites;
         });
-      } else {      //if not a favourite yet, create favouriteRecord
+      } else {      //if not a favourite yet, create favouriteRecord. Send record to airtable
         const favouriteRecord = {
           name: place.name,
           description: place.description || '',
-          address: `${place.address?.block || ''} ${place.address?.streetName || ''}, #${place.address?.floorNumber || ''}-${place.address?.unitNumber || ''}, Singapore ${place.address?.postalCode || ''}`,
-          place_uuid: place.uuid,
+          address: `${place.address?.block || ''} ${place.address?.streetName || ''}, ${place.address?.floorNumber || ''} ${place.address?.unitNumber || ''}, Singapore ${place.address?.postalCode || ''}`,
+          
         };
+        console.log(favouriteRecord)
         
-        await AirtableService.createRecord(favouriteRecord);    //send new favourite to airtable
+        await AirtableService.createRecord(favouriteRecord);    //send new favourite place to airtable
         setFavourites(prev => new Set([...prev, placeId]));     //Add new favourite to the latest favourite array
       }
     } catch (err) {
@@ -91,14 +92,14 @@ const App = () => {
                   path="/"
                   element={
                     <>
-                      <header className="mb-16">  {/* subheader bg styling */}
+                      <header className="mb-16">
                         <h1 className="text-5xl font-light text-gray-900 mb-3 tracking-tight">Cravings</h1>
                         <p className="text-gray-500 text-lg font-light">
                           Never know what you'll find!
                         </p>
                       </header>
 
-                      <div className="mb-16">   {/* SearchBar styling */}
+                      <div className="mb-16">   
                         <CravingSearch onSearch={handleSearch} />
                       </div>
 

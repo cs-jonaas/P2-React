@@ -13,7 +13,7 @@ const CravingMain = ({ foodPlaces, favourites, favouriteLoading, onFavourite }) 
         </div>
       </div>
     );
-  }
+  } else
 
   return (
     <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
