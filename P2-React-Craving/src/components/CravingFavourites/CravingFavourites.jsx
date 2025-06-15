@@ -66,6 +66,7 @@ const onCommentSubmit = (e) => {
   try {
     await AirtableService.updateRecord({ comment }, id);
     console.log('Comment saved to Airtable');
+    
   } catch (err) {
     console.error('Failed to save comment', err);
   }

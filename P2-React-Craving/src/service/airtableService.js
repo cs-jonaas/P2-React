@@ -12,8 +12,6 @@ export const createRecord = async (place) => {
     comment: place.comment,
   };
 
-
-
   try {
     const response = await fetch(AIRTABLE_BASE_URL, {
       method: 'POST',
