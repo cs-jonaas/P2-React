@@ -9,6 +9,7 @@ export const createRecord = async (place) => {
     name: place.name,
     description: place.description,
     address: place.address,
+    comment: place.comment,
   };
 
 
@@ -37,7 +38,7 @@ export const createRecord = async (place) => {
 
 //Airtable Update
 
-export const updateRecord = async (id, record) => {
+export const updateRecord = async (comment, id) => {
   try {
     const response = await fetch(`${AIRTABLE_BASE_URL}/${id}`, {
       method: 'PATCH',
@@ -45,7 +46,7 @@ export const updateRecord = async (id, record) => {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${VITE_AIRTABLE_TOKEN}`
       },
-      body: JSON.stringify({ fields: record }),
+      body: JSON.stringify({ fields: comment }),
     });
     
     if (!response.ok) throw new Error('Airtable update failed');
@@ -58,7 +59,6 @@ export const updateRecord = async (id, record) => {
     throw error;
   }
 };
-
 
 // Airtable Delete
 export const deleteRecord = async (id) => {
@@ -83,6 +83,7 @@ export const deleteRecord = async (id) => {
   }
 };
 
+//Airtable getAllRecord
 
 export const getAllRecords = async () => {
   const res = await fetch(AIRTABLE_BASE_URL, {

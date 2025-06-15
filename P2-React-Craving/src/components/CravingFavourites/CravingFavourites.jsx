@@ -6,7 +6,7 @@ import { deleteRecord } from '../../service/airtableService';
 import CravingCard from '../CravingCard/CravingCard';
 
 
-const CravingFavourites = (place) => {
+const CravingFavourites = (place, isFavourite) => {
   const [favourites, setFavourites] = useState([]);     //list favourite place fetch from Airtable
   const [loading, setLoading] = useState(true);         //state var for loading
   const [error, setError] = useState(null);             //state var to show error message if fetching fails 
@@ -55,6 +55,23 @@ const address = () => { [
   }
 };
 
+const onCommentSubmit = (e) => {
+    e.preventDefault();
+    if (input.trim()) {
+      onCommentSubmit(input.trim());
+    }
+  }
+
+  const handleCommentSubmit = async (id, comment) => {
+  try {
+    await AirtableService.updateRecord({ comment }, id);
+    console.log('Comment saved to Airtable');
+  } catch (err) {
+    console.error('Failed to save comment', err);
+  }
+};
+
+
   if (loading) {                                                    //show message while loading
     return (
       <div className='flex justify-center items-center py-24'>
@@ -73,21 +90,24 @@ const address = () => { [
 
   return (
     <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
+      
       {favourites.map((record) => (
-
+        
         <CravingCard
             key={record.id}
             place={{
                 name: record.fields.name,
                 description: record.fields.description,
                 address: record.fields.address,
-                uuid: record.fields.place_uuid
+                comment: record.fields.comment,
             }}
+            recordId={record.id}
             isFavourite={true}
             isLoading={false}
-            onFavourite={() => handleDelete(record.id)}  
+            onFavourite={() => handleDelete(record.id)} 
         />
         ))}
+        
     </div>
   );
   
